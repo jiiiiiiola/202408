@@ -1,17 +1,99 @@
+<!-- 指定繼承 layout.master 母模板 --> 
 @extends('layout.master') 
-@section('title', $title)
-@section('content')
 
-@include('components.socialButtons')
+<!-- 傳送資料到母模板，並指定變數為 title --> 
+@section('title', $title) 
 
-<h1>{{ $title }}</h1> 
-<h2>{{ $sub_title }}</h2> 
-<div class="social"> 
-    <a href="#">分享到 Facebook</a> 
-    <a href="#">分享到 Twitter</a> 
-</div> 
-Email： <input type="text" name="email" placeholder="Email" > 
-密碼： <input type="password" name="password" placeholder="密碼" > 
-暱稱： <input type="text" name="nickname" placeholder="暱稱" > 
+<!-- 傳送資料到母模板，並指定變數為 content -->
+@section('content') 
 
-@endsection
+		<!-- Page Title
+		============================================= -->
+		<section class="page-title bg-transparent">
+			<div class="container">
+				<div class="page-title-row">
+
+					<div class="page-title-content">
+						<h1>註冊頁面</h1>
+					</div>
+
+					<nav aria-label="breadcrumb">
+						<ol class="breadcrumb">
+							<li class="breadcrumb-item"><a href="#">首頁</a></li>
+							<li class="breadcrumb-item"><a href="#">會員</a></li>
+							<li class="breadcrumb-item active" aria-current="page">註冊頁面</li>
+						</ol>
+					</nav>
+
+				</div>
+			</div>
+		</section><!-- .page-title end -->
+
+		<!-- Content
+		============================================= -->
+		<section id="content">
+			<div class="content-wrap">
+				<div class="container">
+
+					<div >
+
+						<div class="form-result"></div>
+
+						<div class="row">
+							<div class="col-lg-12">
+								<form action="/user/auth/signup" method="post" >
+                                    @csrf
+									<div class="form-process">
+										<div class="css3-spinner">
+											<div class="css3-spinner-scaler"></div>
+										</div>
+									</div>
+									<div class="col-12 form-group">
+										<label>暱稱:</label>
+										<input type="text" name="nickname" id="nickname" class="form-control required" value="{{old('nickname')}}" placeholder="輸入名稱">
+									</div>
+									<div class="col-12 form-group">
+										<label>email:</label>
+										<input type="email" name="email" id="email" class="form-control required" value="{{old('email')}}" placeholder="輸入帳號">
+									</div>
+									<div class="col-12 form-group">
+										<label>密碼:</label>
+										<input type="text" name="password" id="password" class="form-control required" value="{{old('password')}}" placeholder="輸入密碼">
+									</div>
+									<div class="col-12 form-group">
+										<label>帳號類型:</label><br>
+										
+										<div class="form-check form-check-inline">
+											@if( old('type') == 'G' )
+                                            @if( old('type') == 'G' )
+											<input class="form-check-input" type="radio" name="type" id="type" value="G" checked>
+											@else 
+											<input class="form-check-input" type="radio" name="type" id="type" value="G">
+											@endif
+										</div>
+										<div class="form-check form-check-inline">
+											@if( old('type') == 'A' )
+                                            @if( old('type') == 'A' )
+											<input class="form-check-input" type="radio" name="type" id="type" value="A" checked>
+											@else 
+											<input class="form-check-input" type="radio" name="type" id="type" value="A">
+											@endif
+										</div>
+										
+									</div>
+									<div class="col-12">
+										<button type="submit" class="btn btn-secondary">Register</button>
+									</div>
+								</form>
+							</div>
+
+						</div>
+
+					</div>
+
+				</div>
+			</div>
+		</section><!-- #content end -->
+
+
+@endsection 

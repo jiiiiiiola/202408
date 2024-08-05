@@ -3,11 +3,18 @@ namespace App\Http\Controllers;
 use App\Http\Controllers\Controller;
 use App\Shop\Entity\User;
 use Hash;
+use Mail;
 class UserAuthController extends Controller
 {
     public function Login()
     {
         return view('auth.login');
+    }
+    
+    public function LoginProcess()
+    {
+        $form_data = request()->all();
+        dd($form_data);
     }
     public function Profile($id)
     {
@@ -39,6 +46,14 @@ class UserAuthController extends Controller
                 'type' => $form_data['type'],
                 'nickname' => $form_data['nickname'],
             ]);
+
+            Mail::send('email.signUpEmailNotification', ['nickname' => $input['nickname']], 
+            function($message) use ($input) {
+                $message->to($input['email'], $input['nickname'])
+                ->from('gtaped14876@gmail.com')
+                ->subject('Laravel 8 Mail Test');
+            });
+    
             dd($user);
         }
     }

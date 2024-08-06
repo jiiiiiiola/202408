@@ -6,28 +6,20 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/000', function () {
-    return "Hi jila!";
-});
-
-Route::get('/user/auth/login', 'App\Http\Controllers\UserAuthController@Login');
-Route::get('signup', 'App\Http\Controllers\UserAuthController@SignUp');
-Route::get('/user/auth/profile/{id}', 'App\Http\Controllers\UserAuthController@Profile');
-
-Route::get('/user/auth/profile/{id}', 'App\Http\Controllers\UserAuthController@Process
-');
-
-
 Route::group(['prefix' => 'user'], function () {
     Route::group(['prefix' => 'auth'], function () {
-        Route::get('login', 'App\Http\Controllers\UserAuthController@Login');
+        Route::get('signup', 'App\Http\Controllers\UserAuthController@SignUp')->name('user.auth.signup');   
+        Route::post('signup', 'App\Http\Controllers\UserAuthController@SignUpProcess');   
+        
+        Route::get('login', 'App\Http\Controllers\UserAuthController@Login')->name('user.auth.login');;
+        Route::post('login', 'App\Http\Controllers\UserAuthController@LoginProcess');
+
+        Route::get('signout', 'App\Http\Controllers\UserAuthController@SignOut')->name('user.auth.signout');   
+        
+        Route::get('profile/{id}', 'App\Http\Controllers\UserAuthController@Profile');
     });
 });
 
 Route::group(['prefix' => 'merchandise'], function () {
     Route::get('{merchandise_id}', 'App\Http\Controllers\MerchandiseController@MerchandiseItemPage');
 });
-
-Route::get('test', 'App\Http\Controllers\UserAuthController@Test');
-
-
